@@ -7,6 +7,7 @@ import {DetailedUserRepository} from "../repository/detailed-user.repository";
 
 export interface IFeedbackService {
     getFeedback: (feedbackId: string) => Promise<FeedbackModel | null>;
+    getMyFeedbacks: (userId: string) => Promise<FeedbackModel[]>;
     addFeedback: (feedback: FeedbackModel, productId: string, userId: string) => Promise<unknown>;
 }
 
@@ -16,6 +17,22 @@ export class FeedbackService implements IFeedbackService {
         return FeedbackRepository.findById(feedbackId)
             .populate("authorId")
             .exec();
+    }
+
+    getMyFeedbacks(userId: string): Promise<FeedbackModel[]> {
+        return SecureUserRepository.findById(userId).then((user: SecureUserModel) => {
+            return DetailedUserRepository.find({"email" : user.email}).then((userProps: DetailedUserModel[]) => {
+                return FeedbackRepository.find({})
+                    .exec()
+                    .then((feedbacks: FeedbackModel[] | null) => {
+                        if (!feedbacks) {
+                            return Promise.reject();
+                        } else {
+                            return Promise.resolve(feedbacks.filter((f) => JSON.stringify(f.authorId) === JSON.stringify(userProps[0]._id)));
+                        }
+                    });
+            });
+        });
     }
 
     addFeedback(feedback: FeedbackModel, productId: string, userId: string): Promise<FeedbackModel> {
