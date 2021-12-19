@@ -8,5 +8,6 @@ router.use('/orders', require('./orders.controller'))
 router.use('/products', require('./products.controller'))
 router.use('/upload', require('./upload.controller'))
 router.use('/feedbacks', require('./feedbacks.controller'))
+router.use('/companies', require('./companies.controller'))
 
 module.exports = router;
