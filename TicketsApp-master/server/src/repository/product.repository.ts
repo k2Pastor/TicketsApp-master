@@ -24,7 +24,11 @@ const ProductSchema = new Schema<ProductModel>({
     feedbacks: [{
         type: Schema.Types.ObjectId,
         ref: 'Feedback'
-    }]
+    }],
+    company: {
+        type: Schema.Types.ObjectId,
+        ref: 'Company'
+    }
 });
 
 export interface IProductRepository {

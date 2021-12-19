@@ -38,7 +38,8 @@ export class ProductsController {
             price: req.body.price,
             participantsAmount: req.body.participantsAmount,
             fileName: req.body.fileName,
-            feedbacks: []
+            feedbacks: [],
+            company: req.body.company
         }
         productService.addProduct(product).then((product) => {
             res.json(product);

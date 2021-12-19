@@ -1,5 +1,6 @@
 import {CredentialsModel} from "./credentials.model";
 import {FeedbackModel} from "./feedback.model";
+import {CompanyModel} from "./company.model";
 
 export interface ProductModel {
     _id?: string;
@@ -9,6 +10,7 @@ export interface ProductModel {
     participantsAmount: number;
     fileName?: string;
     feedbacks: FeedbackModel[];
+    company: CompanyModel;
 }
 
 export interface ProductsState {

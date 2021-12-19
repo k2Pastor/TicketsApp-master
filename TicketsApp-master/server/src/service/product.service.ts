@@ -17,6 +17,7 @@ export class ProductService implements IProductService {
     getProduct(productId: string): Promise<ProductModel> {
         return ProductRepository.findById(productId)
             .populate('feedbacks')
+            .populate('company')
             .exec();
 }
 
