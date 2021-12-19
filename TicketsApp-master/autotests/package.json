@@ -1,0 +1,30 @@
+{
+  "name": "@pavo/shared-services-autotests",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./index.js",
+  "private": true,
+  "scripts": {
+    "test": "node --max-http-header-size=80000 ./node_modules/testcafe/bin/testcafe ./tests/01-Gold  --stop-on-first-fail || exit 0",
+    "test-with-registration": "node --max-http-header-size=80000 ./node_modules/testcafe/bin/testcafe ./tests  --stop-on-first-fail || exit 0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "axios": "^0.21.1",
+    "imask": "6.0.7",
+    "interpolate-json": "2.1.3",
+    "moment": "^2.29.1",
+    "testcafe": "1.16.0",
+    "testcafe-reporter-html": "1.4.6",
+    "testcafe-reporter-st-html": "1.0.0",
+    "testcafe-reporter-xunit": "2.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.17.60",
+    "@types/uuid": "^8.3.1",
+    "uuid": "^8.3.1",
+    "typescript": "^4.3.5"
+  }
+}

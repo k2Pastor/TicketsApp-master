@@ -1,0 +1,46 @@
+{
+  "assertionTimeout": 20000,
+  "selectorTimeout": 20000,
+  "videoPath": "dist/videos",
+  "browsers": "chrome:headless:emulation:width=1439;height=900",
+  "skipJsErrors": true,
+  "skipUncaughtErrors": true,
+  "compilerOptions": {
+    "typescript": {
+      "configPath": "./tsconfig.json"
+    }
+  },
+  "videoOptions": {
+    "failedOnly": false,
+    "pathPattern": "${DATE}_${TIME}-${TEST_ID}-${RUN_ID}-${FILE_INDEX}.mp4"
+  },
+  "screenshots": {
+    "path": "dist/screenshots",
+    "fullPage": true,
+    "takeOnFails": true,
+    "pathPattern": "${DATE}_${TIME}-${TEST_ID}-${RUN_ID}-${FILE_INDEX}.png"
+  },
+  "quarantineMode": false,
+  "concurrency": 4,
+  "reporter": [
+    {
+      "name": "spec"
+    },
+    {
+      "name": "xunit",
+      "output": "dist/report.xml"
+    },
+    {
+      "name": "html",
+      "output": "dist/report.html"
+    },
+    {
+      "name": "json",
+      "output": "dist/report.json"
+    },
+    {
+      "name": "st-html",
+      "output": "dist/report-simple.html"
+    }
+  ]
+}

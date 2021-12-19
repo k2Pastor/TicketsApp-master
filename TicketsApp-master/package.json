@@ -1,0 +1,17 @@
+{
+  "name": "shared-services",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "config": {
+    "mongodbMemoryServer": {
+      "disablePostinstall": "1"
+    }
+  },
+  "workspaces": [
+    "client",
+    "server",
+    "shared",
+    "autotests"
+  ]
+}

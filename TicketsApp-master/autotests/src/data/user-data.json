@@ -1,0 +1,12 @@
+{
+  "admin": {
+    "firstName": "First Name AT",
+    "lastName": "Last Name AT",
+    "phone": "2929929299292"
+  },
+  "user": {
+    "firstName": "UserFname",
+    "lastName": "Last",
+    "phone": "123123"
+  }
+}
