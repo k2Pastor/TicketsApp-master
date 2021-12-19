@@ -10,6 +10,7 @@ export interface IOrderService {
     getAll: () => Promise<OrderModel[]>;
     getOrder: (orderId: string) => Promise<OrderModel | null>;
     submit: (userId: string, orderId: string) => Promise<unknown>;
+    getMyOrders: (userId: string) => Promise<OrderModel[]>;
 }
 
 export class OrderService implements IOrderService {
@@ -66,6 +67,22 @@ export class OrderService implements IOrderService {
             .populate('product')
             .populate('participants')
             .exec();
+    }
+
+    getMyOrders(userId: string): Promise<OrderModel[]> {
+        return SecureUserRepository.findById(userId).then((user: SecureUserModel) => {
+            return DetailedUserRepository.find({"email" : user.email}).then((userProps: DetailedUserModel[]) => {
+                return OrderRepository.find({})
+                    .exec()
+                    .then((orders: OrderModel[] | null) => {
+                        if (!orders) {
+                            return Promise.reject();
+                        } else {
+                            return Promise.resolve(orders.filter((o) => o.participants.map(p => p._id).includes(userProps[0]._id)))
+                        }
+                    });
+            });
+        });
     }
 
     submit(userId: string, orderId: string): Promise<unknown> {

@@ -23,15 +23,15 @@ export class FeedbacksController {
     }
 
     addFeedback(req: Request, res: Response): void {
-        // // @ts-ignore
-        // const { payload: { id } } = req;
+        // @ts-ignore
+        const { payload: { id } } = req;
         const productId = req.body.productId;
         const feedback: FeedbackModel = {
             title: req.body.title,
             description: req.body.description,
-            author: req.body.authorId
+            authorId: null
         }
-        feedbackService.addFeedback(feedback, productId).then((feedback) => {
+        feedbackService.addFeedback(feedback, productId, id).then((feedback) => {
            res.json(feedback);
         });
     }
@@ -39,7 +39,7 @@ export class FeedbacksController {
 
 const controller = new FeedbacksController();
 
-router.get('/getFeedback', auth.optional, controller.getFeedback);
-router.post('/addFeedback', auth.optional, controller.addFeedback);
+router.get('/getFeedback/:id', auth.required, controller.getFeedback);
+router.post('/addFeedback', auth.required, controller.addFeedback);
 
 module.exports = router;

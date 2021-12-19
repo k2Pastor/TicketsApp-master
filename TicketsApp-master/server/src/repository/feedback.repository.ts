@@ -10,9 +10,9 @@ const FeedbackSchema = new Schema<FeedbackModel>({
         type: String,
         required: true
     },
-    author: {
+    authorId: {
         type: Schema.Types.ObjectId,
-        ref: 'Feedback'
+        ref: 'DetailedUser'
     }
 });
 
