@@ -48,13 +48,17 @@ export class FeedbackService implements IFeedbackService {
                 return ProductRepository.findById(productId)
                     .exec()
                     .then((product: ProductModel | null) => {
-                        if (product) {
-                            feedback.authorId = userProps._id;
-                            const finalFeedback = new FeedbackRepository(feedback);
-                            return finalFeedback.save()
-                                .then(() => {
-                                    return ProductRepository.updateOne({_id: productId}, {$push: {feedbacks: finalFeedback._id || ''}}).exec();
-                                });
+                        if (userProps.role === "User") {
+                            if (product) {
+                                feedback.authorId = userProps._id;
+                                const finalFeedback = new FeedbackRepository(feedback);
+                                return finalFeedback.save()
+                                    .then(() => {
+                                        return ProductRepository.updateOne({_id: productId}, {$push: {feedbacks: finalFeedback._id || ''}}).exec();
+                                    });
+                            }
+                        } else {
+                            return Promise.reject("Operation is forbidden!");
                         }
                         return Promise.reject("Product has not been found in database!");
                     });

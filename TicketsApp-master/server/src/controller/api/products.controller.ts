@@ -42,7 +42,13 @@ export class ProductsController {
             company: req.body.company
         }
         productService.addProduct(product).then((product) => {
-            res.json(product);
+            if (!product) {
+                res.status(400).send();
+            } else {
+                res.status(200).send();
+            }
+        }, (error) => {
+            res.status(500).send(error);
         })
     }
 }

@@ -46,7 +46,13 @@ export class FeedbacksController {
             authorId: null
         }
         feedbackService.addFeedback(feedback, productId, id).then((feedback) => {
-           res.json(feedback);
+            if (!feedback) {
+                res.status(400).send();
+            } else {
+                res.status(200).send();
+            }
+        }, (error) => {
+            res.status(500).send(error);
         });
     }
 }
