@@ -13,6 +13,7 @@ export class CompaniesController {
         const company: CompanyModel = ({
             title: req.body.title,
             description: req.body.description,
+            fileName: req.body.fileName
         });
 
         companyService.addCompany(company).then((company) => {

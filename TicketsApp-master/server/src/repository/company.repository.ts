@@ -9,6 +9,9 @@ const CompanySchema = new Schema<CompanyModel>({
     description: {
         type: String,
         required: true
+    },
+    fileName: {
+        type: String,
     }
 });
 
