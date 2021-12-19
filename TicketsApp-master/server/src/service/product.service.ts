@@ -3,6 +3,7 @@ import {ProductModel} from "@pavo/shared-services-shared/src";
 
 export interface IProductService {
     getAll: () => Promise<ProductModel[]>;
+    getProduct: (productId: string) => Promise<ProductModel>;
     addProduct: (product: ProductModel) => Promise<ProductModel>;
 }
 
@@ -12,6 +13,12 @@ export class ProductService implements IProductService {
         return ProductRepository.find({})
             .exec();
     }
+
+    getProduct(productId: string): Promise<ProductModel> {
+        return ProductRepository.findById(productId)
+            .populate('feedbacks')
+            .exec();
+}
 
     addProduct(product: ProductModel): Promise<ProductModel> {
         if (!product.title) {
