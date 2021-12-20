@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
 import axiosInstance from "../Auth/AxiosInstance";
-import {Button, Form, FormInstance, Input, InputNumber, Select, Upload} from "antd";
+import {Button, Form, FormInstance, Input, Upload} from "antd";
 import { InboxOutlined } from '@ant-design/icons';
 import {withRouter} from "react-router-dom";
-import {CompanyModel} from "@pavo/shared-services-shared/src";
 
-interface NewProductState {
+interface NewCompanyState {
     disabled: boolean;
     title: string;
     description: string;
-    price: number;
-    participantsAmount: number;
+    //price: number;
+    //participantsAmount: number;
     fileName: string;
-    company: string;
-    companies: Array<CompanyModel>;
-    selectedOption: string;
 }
 
 const layout = {
@@ -25,7 +21,7 @@ const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
 };
 
-class NewProduct extends Component<any, NewProductState> {
+class NewCompany extends Component<any, NewCompanyState> {
     formRef = React.createRef<FormInstance>();
 
     constructor(props: unknown) {
@@ -35,12 +31,7 @@ class NewProduct extends Component<any, NewProductState> {
             disabled: false,
             title: '',
             description: '',
-            price: 0,
-            participantsAmount: 0,
             fileName: "",
-            company: "",
-            companies: [],
-            selectedOption: "",
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -82,41 +73,20 @@ class NewProduct extends Component<any, NewProductState> {
         }
     };
 
-    handleSubmit(e: NewProductState): void {
+    handleSubmit(e: NewCompanyState): void {
         this.setState({
-          disabled: true,
+            disabled: true,
         });
         const request = {...this.state, ...e};
-        axiosInstance.post(`/products/addProduct`, request).then((_result) => {
-            this.props.history.push('/products');
+        axiosInstance.post(`/companies/addCompany`, request).then((_result) => {
+            this.props.history.push('/companies');
         });
-    }
-
-    async getAllCompanies() {
-        axiosInstance.get(`/companies/allCompanies`).then((response) => {
-            //this.companies: response.data;
-            this.setState({
-                companies: response.data,
-            });
-        });
-    }
-
-    handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
     }
 
     render() {
-        const { selectedOption } = this.state;
-        this.getAllCompanies();
-        var options = [];
-        for (var val of this.state.companies) {
-            options.push({value: val._id, label: val.title});
-        }
-
         return (
             <div style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
-                <h2 style={{paddingBottom: "15px"}}>New Product</h2>
+                <h2 style={{paddingBottom: "15px"}}>New Company</h2>
                 <Form {...layout}
                       ref={this.formRef}
                       name="control-ref"
@@ -133,32 +103,11 @@ class NewProduct extends Component<any, NewProductState> {
                             required: true,
                             message: "Please, input title!"
                         }]}>
-                        <Input id={"newProductTitleInput"}/>
+                        <Input id={"newCompanyTitleInput"}/>
                     </Form.Item>
                     <Form.Item name="description" label="Description">
-                        <Input id={"newProductDescriptionInput"}/>
+                        <Input id={"newCompanyDescriptionInput"}/>
                     </Form.Item>
-                    <Form.Item name="price" label="Price" rules={[
-                        {
-                            required: true,
-                            message: "Please, input price!"
-                        }]}>
-                        <InputNumber style={{width: "100%"}} id={"newProductPriceInput"}/>
-                    </Form.Item>
-                    <Form.Item name="participantsAmount" label="Participants Amount" rules={[
-                        {
-                            required: true,
-                            message: "Please, input Participants Amount!"
-                        }]}>
-                        <InputNumber style={{width: "100%"}} id={"newProductParticipantsInput"} />
-                    </Form.Item>
-
-                    <Select
-                        className="basic-single"
-                        options={options}
-                        onChange={this.handleChange}
-                    />
-
                     <Form.Item label="Image">
                         <Form.Item name="image" valuePropName="fileList" getValueFromEvent={this.normFile} noStyle>
                             <Upload.Dragger name="files"
@@ -175,14 +124,14 @@ class NewProduct extends Component<any, NewProductState> {
                         </Form.Item>
                     </Form.Item>
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" id={"newProductSubmit"} htmlType="submit">
+                        <Button type="primary" id={"newCompanySubmit"} htmlType="submit">
                             Submit
                         </Button>
                     </Form.Item>
                 </Form>
             </div>
         )
-      }
+    }
 }
 
-export default withRouter(NewProduct);
+export default withRouter(NewCompany);

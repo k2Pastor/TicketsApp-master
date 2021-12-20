@@ -30,6 +30,15 @@ class NavBar extends Component<any, any> {
                         </Link>
                     </Menu.Item>
                     }
+                    {userService.hasRole("Admin") &&
+                        <Menu.Item
+                            key="3">
+                            <Link to={`/companies`}
+                                  className={"navbar-menu-item"}>
+                                All Companies
+                            </Link>
+                        </Menu.Item>
+                    }
                 </Menu>
                 <div className="header-button-panel">
                     {!userService.isAuthenticated() &&
