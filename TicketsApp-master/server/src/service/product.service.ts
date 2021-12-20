@@ -4,6 +4,7 @@ import {ProductModel} from "@pavo/shared-services-shared/src";
 export interface IProductService {
     getAll: () => Promise<ProductModel[]>;
     getProduct: (productId: string) => Promise<ProductModel>;
+    getProductsByCompany: (companyId: string) => Promise<ProductModel[]>;
     addProduct: (product: ProductModel) => Promise<ProductModel>;
 }
 
@@ -19,7 +20,19 @@ export class ProductService implements IProductService {
             .populate('feedbacks')
             .populate('company')
             .exec();
-}
+    }
+
+    getProductsByCompany(companyId: string): Promise<ProductModel[]> {
+        return ProductRepository.find({})
+            .exec()
+            .then((products: ProductModel[] | null) => {
+               if (!products) {
+                   return Promise.reject();
+               } else {
+                   return Promise.resolve(products.filter((p) => JSON.stringify(p?.company?._id) === JSON.stringify(companyId)))
+               }
+            });
+    }
 
     addProduct(product: ProductModel): Promise<ProductModel> {
         if (!product.title) {

@@ -31,6 +31,17 @@ export class ProductsController {
         })
     }
 
+    getProductsByCompany(req: Request, res: Response): void {
+        const companyId = req.params.id;
+        productService.getProductsByCompany(companyId).then((products) => {
+            if (!products || !products.length) {
+                res.status(404).send();
+            } else {
+                res.send(products);
+            }
+        })
+    }
+
     addProduct(req: Request, res: Response): void {
         const product: ProductModel = {
             title: req.body.title,
@@ -58,6 +69,8 @@ const controller = new ProductsController();
 router.get('/allProducts', auth.required, controller.getAll)
 
 router.get('/getProduct/:id', auth.required, controller.getProduct)
+
+router.get('/getProductsByCompany/:id', auth.required, controller.getProductsByCompany)
 
 router.post('/addProduct', auth.required, controller.addProduct)
 
