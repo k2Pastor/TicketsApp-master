@@ -10,6 +10,8 @@ import MyOrders from './Orders/MyOrders'
 import {RegistrationForm} from "./Registration/RegistrationForm";
 import ProductsListPage from "./Products/ProductsListPage";
 import NewProduct from "./Products/NewProduct";
+import CompaniesListPage from "./Companies/CompaniesListPage";
+import NewCompany from "./Companies/NewCompany";
 import {Layout} from "antd";
 
 const {Content, Footer} = Layout;
@@ -27,6 +29,8 @@ class App extends Component {
             <PrivateRoute path='/newProduct' component={NewProduct} />
             <PrivateRoute path='/user/:id' component={UserPage}/>
             <PrivateRoute path='/products' component={ProductsListPage}/>
+            <PrivateRoute path='/companies' component={CompaniesListPage}/>
+            <PrivateRoute path='/newCompany' component={NewCompany} />
             <Route path="/register" component={RegistrationForm} />
             {/* <Route exact path='/user' component={User}/> */}
         </Content>
