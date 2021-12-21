@@ -65,7 +65,7 @@ class CompaniesListPage extends Component<any, CompanyState> {
                             >
                                 <Card
                                     title={company.title}
-                                    style={{ width: 300 }}
+                                    style={{ width: 300, height: 200 }}
                                     cover={
                                         company.fileName &&
                                         <img

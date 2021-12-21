@@ -14,7 +14,6 @@ interface NewProductState {
     fileName: string;
     company: string;
     companies: Array<CompanyModel>;
-    selectedOption: string;
 }
 
 const layout = {
@@ -40,7 +39,6 @@ class NewProduct extends Component<any, NewProductState> {
             fileName: "",
             company: "",
             companies: [],
-            selectedOption: "",
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -94,23 +92,21 @@ class NewProduct extends Component<any, NewProductState> {
 
     async getAllCompanies() {
         axiosInstance.get(`/companies/allCompanies`).then((response) => {
-            //this.companies: response.data;
             this.setState({
                 companies: response.data,
             });
         });
     }
 
-    handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
+    handleChange = (value: string) => {
+        this.setState({ company: value });
+        console.log(`Option selected:`, value);
     }
 
     render() {
-        const { selectedOption } = this.state;
         this.getAllCompanies();
-        var options = [];
-        for (var val of this.state.companies) {
+        let options = [];
+        for (let val of this.state.companies) {
             options.push({value: val._id, label: val.title});
         }
 
@@ -152,13 +148,13 @@ class NewProduct extends Component<any, NewProductState> {
                         }]}>
                         <InputNumber style={{width: "100%"}} id={"newProductParticipantsInput"} />
                     </Form.Item>
-
+                    <Form.Item name="company" label="Company">
                     <Select
                         className="basic-single"
                         options={options}
                         onChange={this.handleChange}
                     />
-
+                    </Form.Item>
                     <Form.Item label="Image">
                         <Form.Item name="image" valuePropName="fileList" getValueFromEvent={this.normFile} noStyle>
                             <Upload.Dragger name="files"
