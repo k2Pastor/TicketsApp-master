@@ -12,7 +12,8 @@ interface NewProductState {
     price: number;
     participantsAmount: number;
     fileName: string;
-    company: string;
+    companyId: string;
+    companyTitle: string;
     companies: Array<CompanyModel>;
 }
 
@@ -37,12 +38,14 @@ class NewProduct extends Component<any, NewProductState> {
             price: 0,
             participantsAmount: 0,
             fileName: "",
-            company: "",
+            companyId: "",
+            companyTitle: "",
             companies: [],
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.uploadImage = this.uploadImage.bind(this);
+        this.getAllCompanies();
     }
 
     normFile(e: any): any {
@@ -99,12 +102,11 @@ class NewProduct extends Component<any, NewProductState> {
     }
 
     handleChange = (value: string) => {
-        this.setState({ company: value });
+        this.setState({ companyId: value });
         console.log(`Option selected:`, value);
     }
 
     render() {
-        this.getAllCompanies();
         let options = [];
         for (let val of this.state.companies) {
             options.push({value: val._id, label: val.title});
