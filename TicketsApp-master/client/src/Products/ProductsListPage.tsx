@@ -7,9 +7,10 @@ import {Button, Card, Col, notification, Row} from "antd";
 import {api_url} from "../environment";
 
 class ProductsListPage extends Component<any, ProductsState> {
+    companyName: string;
     constructor(props: unknown) {
         super(props);
-
+        this.companyName = "";
         this.state = {
             products: null,
             credentials: null,
@@ -41,6 +42,18 @@ class ProductsListPage extends Component<any, ProductsState> {
             message: 'Order has been successfully created!',
         });
     };
+
+    setCompanyName(name: string) {
+        this.companyName = name;
+        console.log("syeta = " + this.companyName);
+    }
+
+    getCompanyName(id: any): void {
+        console.log("id = " + id);
+        axiosInstance.get(`/companies/getCompany/${id}`).then((response) => {
+            this.setCompanyName(response.data.title);
+        });
+    }
 
     render() {
         return (
@@ -87,6 +100,7 @@ class ProductsListPage extends Component<any, ProductsState> {
                                 >
                                     <p>{product.description}</p>
                                     <b>Price: {product.price}</b>
+                                    <p>Company: {product.company.title}</p>
                                 </Card>
                             </Col>
                         ))
