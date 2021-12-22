@@ -39,13 +39,13 @@ export class FeedbacksController {
     addFeedback(req: Request, res: Response): void {
         // @ts-ignore
         const { payload: { id } } = req;
-        const productId = req.body.productId;
+        const orderId = req.body.orderId;
         const feedback: FeedbackModel = {
             title: req.body.title,
             description: req.body.description,
             authorId: null
         }
-        feedbackService.addFeedback(feedback, productId, id).then((feedback) => {
+        feedbackService.addFeedback(feedback, orderId, id).then((feedback) => {
             if (!feedback) {
                 res.status(400).send();
             } else {
