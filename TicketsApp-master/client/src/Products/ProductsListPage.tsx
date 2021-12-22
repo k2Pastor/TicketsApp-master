@@ -43,18 +43,6 @@ class ProductsListPage extends Component<any, ProductsState> {
         });
     };
 
-    setCompanyName(name: string) {
-        this.companyName = name;
-        console.log("syeta = " + this.companyName);
-    }
-
-    getCompanyName(id: any): void {
-        console.log("id = " + id);
-        axiosInstance.get(`/companies/getCompany/${id}`).then((response) => {
-            this.setCompanyName(response.data.title);
-        });
-    }
-
     render() {
         return (
             <div className="products-page-cards-container">
