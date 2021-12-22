@@ -137,9 +137,9 @@ class OrderDetailsPage extends Component<any, {order: OrderModel, createdSuccess
                                       style={{marginLeft: "10px"}}
                                       onClick={() => {
                                   this.submit();
-                              }}>Submit</Button>
+                              }}>Submit</Button>,
                       ])}
-                  ><Descriptions.Item label="Company">{order.product.company.title}</Descriptions.Item>
+                  ><Descriptions.Item label="Company"><Link to={`/company/${order.product.company._id}`}>{order.product.company.title}</Link></Descriptions.Item>
                     <Descriptions.Item label="Description">{order.product.description}</Descriptions.Item>
                     <Descriptions.Item label="Price">{order.product.price}</Descriptions.Item>
                     <Descriptions.Item
