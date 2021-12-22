@@ -36,6 +36,19 @@ export class FeedbacksController {
         })
     }
 
+    getFeedbacksByOrderId(req: Request, res: Response): void {
+        const orderId = req.params.id;
+        feedbackService.getFeedbacksByOrderId(orderId).then((feedbacks) => {
+            if (!feedbacks || !feedbacks.length) {
+                res.status(404).send();
+            } else {
+                res.send(feedbacks);
+            }
+        }, (e) => {
+            res.status(500).send(e);
+        })
+    }
+
     addFeedback(req: Request, res: Response): void {
         // @ts-ignore
         const { payload: { id } } = req;
@@ -61,6 +74,7 @@ const controller = new FeedbacksController();
 
 router.get('/getFeedback/:id', auth.required, controller.getFeedback);
 router.get('/getMyFeedbacks', auth.required, controller.getMyFeedbacks);
+router.get('/getFeedbacksByOrderId/:id', auth.required, controller.getFeedbacksByOrderId);
 router.post('/addFeedback', auth.required, controller.addFeedback);
 
 module.exports = router;

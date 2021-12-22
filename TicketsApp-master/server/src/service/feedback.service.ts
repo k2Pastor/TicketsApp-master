@@ -9,6 +9,7 @@ import {OrderRepository} from "../repository/order.repository";
 export interface IFeedbackService {
     getFeedback: (feedbackId: string) => Promise<FeedbackModel | null>;
     getMyFeedbacks: (userId: string) => Promise<FeedbackModel[]>;
+    getFeedbacksByOrderId: (orderId: string) => Promise<FeedbackModel[]>;
     addFeedback: (feedback: FeedbackModel, orderId: string, userId: string) => Promise<unknown>;
 }
 
@@ -34,6 +35,22 @@ export class FeedbackService implements IFeedbackService {
                     });
             });
         });
+    }
+
+    getFeedbacksByOrderId(orderId: string): Promise<FeedbackModel[]> {
+        return OrderRepository.findById(orderId).then((order: OrderModel) => {
+            if (order) {
+                return ProductRepository.findById(order.product)
+                    .populate('feedbacks')
+                    .exec()
+                    .then((product : ProductModel | null) => {
+                        return Promise.resolve(product.feedbacks);
+                    });
+            } else {
+                return Promise.reject("Order has not been found in database!");
+            }
+        });
+
     }
 
     addFeedback(feedback: FeedbackModel, orderId: string, userId: string): Promise<FeedbackModel> {
