@@ -123,7 +123,8 @@ class OrderDetailsPage extends Component<any, {order: OrderModel, createdSuccess
                       title={order.product.title}
                       size={"default"}
                       column={1}
-                      extra={userService.getCredentials() && (!order.isSubmitted && [!order.participants.find((p) => p._id === userService.getCredentials()?._id)
+                      extra={
+                          userService.getCredentials() && (!order.isSubmitted && [!order.participants.find((p) => p._id === userService.getCredentials()?._id)
                           ? <Button key={1} type="primary" id={"participateButton"} onClick={() => {
                             this.participate();
                           }}>Participate</Button>
@@ -138,6 +139,12 @@ class OrderDetailsPage extends Component<any, {order: OrderModel, createdSuccess
                                       onClick={() => {
                                   this.submit();
                               }}>Submit</Button>,
+                              (order.participants.length === order.product.participantsAmount) &&
+                              <Button style={{marginLeft: "10px"}} key={4} type="primary" danger id={"feedbackButton"}>
+                                  <Link to={`/newFeedback/${order._id}`}>
+                                      Feedback
+                                  </Link>
+                              </Button>
                       ])}
                   ><Descriptions.Item label="Company"><Link to={`/company/${order.product.company._id}`}>{order.product.company.title}</Link></Descriptions.Item>
                     <Descriptions.Item label="Description">{order.product.description}</Descriptions.Item>

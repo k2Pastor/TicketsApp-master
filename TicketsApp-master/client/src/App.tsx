@@ -14,6 +14,7 @@ import NewProduct from "./Products/NewProduct";
 import CompaniesListPage from "./Companies/CompaniesListPage";
 import NewCompany from "./Companies/NewCompany";
 import {Layout} from "antd";
+import NewFeedback from "./Feedbacks/NewFeedback";
 
 const {Content, Footer} = Layout;
 
@@ -29,6 +30,7 @@ class App extends Component {
             <Route exact path='/company/:id' component={CompanyDetailsPage}/>
             <Route path="/login" component={LoginPage} />
             <PrivateRoute path='/newProduct' component={NewProduct} />
+            <PrivateRoute path='/newFeedback/:id' component={NewFeedback} />
             <PrivateRoute path='/user/:id' component={UserPage}/>
             <PrivateRoute path='/products' component={ProductsListPage}/>
             <PrivateRoute path='/companies' component={CompaniesListPage}/>

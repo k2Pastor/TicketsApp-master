@@ -4,11 +4,13 @@ import {Button, Form, FormInstance, Input, Upload} from "antd";
 import { InboxOutlined } from '@ant-design/icons';
 import {withRouter} from "react-router-dom";
 
-interface NewCompanyState {
+interface NewFeedbackState {
     disabled: boolean;
     title: string;
     description: string;
+    authorId: string;
     fileName: string;
+    orderId: string;
 }
 
 const layout = {
@@ -19,7 +21,7 @@ const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
 };
 
-class NewCompany extends Component<any, NewCompanyState> {
+class NewFeedback extends Component<any, NewFeedbackState> {
     formRef = React.createRef<FormInstance>();
 
     constructor(props: unknown) {
@@ -29,7 +31,9 @@ class NewCompany extends Component<any, NewCompanyState> {
             disabled: false,
             title: '',
             description: '',
+            authorId: '',
             fileName: "",
+            orderId: "",
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -71,20 +75,24 @@ class NewCompany extends Component<any, NewCompanyState> {
         }
     };
 
-    handleSubmit(e: NewCompanyState): void {
+    handleSubmit(e: NewFeedbackState): void {
+        const { match: { params } } = this.props;
         this.setState({
             disabled: true,
+            orderId: params.id
         });
-        const request = {...this.state, ...e};
-        axiosInstance.post(`/companies/addCompany`, request).then((_result) => {
-            this.props.history.push('/companies');
+        const request = {...this.state, ...e} as any;
+        axiosInstance.post(`/feedbacks/addFeedback`, request).then((_result) => {
+            this.props.history.push('/feedbacks');
         });
     }
 
     render() {
         return (
+            console.log("this.state.title: " + this.state.title),
+            console.log("this.state.description: " + this.state.description),
             <div style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
-                <h2 style={{paddingBottom: "15px"}}>New Company</h2>
+                <h2 style={{paddingBottom: "15px"}}>New Feedback</h2>
                 <Form {...layout}
                       ref={this.formRef}
                       name="control-ref"
@@ -101,10 +109,10 @@ class NewCompany extends Component<any, NewCompanyState> {
                             required: true,
                             message: "Please, input title!"
                         }]}>
-                        <Input id={"newCompanyTitleInput"}/>
+                        <Input id={"newFeedbackTitleInput"}/>
                     </Form.Item>
                     <Form.Item name="description" label="Description">
-                        <Input id={"newCompanyDescriptionInput"}/>
+                        <Input id={"newFeedbackDescriptionInput"}/>
                     </Form.Item>
                     <Form.Item label="Image">
                         <Form.Item name="image" valuePropName="fileList" getValueFromEvent={this.normFile} noStyle>
@@ -122,7 +130,7 @@ class NewCompany extends Component<any, NewCompanyState> {
                         </Form.Item>
                     </Form.Item>
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" id={"newCompanySubmit"} htmlType="submit">
+                        <Button type="primary" id={"newFeedbackSubmit"} htmlType="submit">
                             Submit
                         </Button>
                     </Form.Item>
@@ -132,4 +140,4 @@ class NewCompany extends Component<any, NewCompanyState> {
     }
 }
 
-export default withRouter(NewCompany);
+export default withRouter(NewFeedback);
