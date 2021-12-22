@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom';
 import NavBar from './NavBar/NavBar';
 import OrdersListPage from './Orders/OrdersListPage';
 import OrderDetailsPage from './OrderDetails/OrderDetailsPage';
+import CompanyDetailsPage from './CompanyDetails/CompanyDetailsPage';
 import LoginPage from './LoginPage/LoginPage'
 import { PrivateRoute } from './Auth/PrivateRoute';
 import UserPage from './UserPage/UserPage'
@@ -25,6 +26,7 @@ class App extends Component {
             <PrivateRoute path='/myTickets' component={MyOrders}/>
             <Route exact path='/' component={OrdersListPage}/>
             <Route exact path='/order/:id' component={OrderDetailsPage}/>
+            <Route exact path='/company/:id' component={CompanyDetailsPage}/>
             <Route path="/login" component={LoginPage} />
             <PrivateRoute path='/newProduct' component={NewProduct} />
             <PrivateRoute path='/user/:id' component={UserPage}/>
