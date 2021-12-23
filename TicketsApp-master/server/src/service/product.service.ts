@@ -11,7 +11,8 @@ export interface IProductService {
 export class ProductService implements IProductService {
 
     getAll(): Promise<ProductModel[]> {
-        return ProductRepository.find({}).populate('company')
+        return ProductRepository.find({})
+            .populate('company')
             .exec();
     }
 

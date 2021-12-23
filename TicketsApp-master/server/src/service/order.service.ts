@@ -65,6 +65,7 @@ export class OrderService implements IOrderService {
     getOrder(orderId: string): Promise<OrderModel | null> {
         return OrderRepository.findById(orderId)
             .populate({path: 'product', populate : {path: 'company'}})
+            .populate({path: 'product', populate : {path: 'feedbacks', populate: {path: 'authorId'}}})
             .populate('participants')
             .exec();
     }
