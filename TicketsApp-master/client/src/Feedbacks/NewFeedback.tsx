@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import axiosInstance from "../Auth/AxiosInstance";
-import {Button, Form, FormInstance, Input, Upload} from "antd";
+import {Button, Form, FormInstance, Input, Result, Upload} from "antd";
 import { InboxOutlined } from '@ant-design/icons';
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import { SmileOutlined } from '@ant-design/icons';
 
 interface NewFeedbackState {
     disabled: boolean;
@@ -11,6 +12,7 @@ interface NewFeedbackState {
     authorId: string;
     fileName: string;
     orderId: string;
+    createdSuccessfully: boolean;
 }
 
 const layout = {
@@ -34,6 +36,7 @@ class NewFeedback extends Component<any, NewFeedbackState> {
             authorId: '',
             fileName: "",
             orderId: "",
+            createdSuccessfully: false,
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -79,15 +82,32 @@ class NewFeedback extends Component<any, NewFeedbackState> {
         const { match: { params } } = this.props;
         this.setState({
             disabled: true,
-            orderId: params.id
+            orderId: params.id,
         });
         const request = {...this.state, ...e} as any;
         axiosInstance.post(`/feedbacks/addFeedback`, request).then((_result) => {
-            this.props.history.push('/feedbacks');
+            this.setState({
+                createdSuccessfully: true,
+            });
         });
+
     }
 
     render() {
+        const {createdSuccessfully} = this.state;
+        if (createdSuccessfully) {
+            return (
+                <Result
+                    icon={<SmileOutlined />}
+                    title="Great, feedback was successfully submitted!"
+                    extra={<Button type="primary">
+                        <Link to={`/order/${this.state.orderId}`}>
+                            <span> Go Back</span>
+                        </Link>
+                    </Button>}
+                />
+            );
+        }
         return (
             console.log("this.state.title: " + this.state.title),
             console.log("this.state.description: " + this.state.description),
@@ -133,6 +153,7 @@ class NewFeedback extends Component<any, NewFeedbackState> {
                         <Button type="primary" id={"newFeedbackSubmit"} htmlType="submit">
                             Submit
                         </Button>
+
                     </Form.Item>
                 </Form>
             </div>

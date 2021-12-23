@@ -1,7 +1,7 @@
 import React, {Component, ReactElement} from 'react';
 import {OrderModel} from "@pavo/shared-services-shared/src";
 import axiosInstance from "../Auth/AxiosInstance";
-import {Breadcrumb, Button, Carousel, Descriptions, notification, Progress, Result} from "antd";
+import {Avatar, Breadcrumb, Button, Carousel, Descriptions, List, notification, Progress, Result} from "antd";
 import {userService} from "../Services/UserService";
 import { HomeOutlined } from '@ant-design/icons';
 import {Link} from "react-router-dom";
@@ -11,8 +11,8 @@ class OrderDetailsPage extends Component<any, {order: OrderModel, createdSuccess
     constructor(props: unknown) {
         super(props);
         this.state = {
-          order: null,
-          createdSuccessfully: false,
+            order: null,
+            createdSuccessfully: false,
         };
       }
 
@@ -155,7 +155,22 @@ class OrderDetailsPage extends Component<any, {order: OrderModel, createdSuccess
                         <p className={"order-details__participant"} key={participant._id}>{participant.firstName + " " + participant.lastName}</p>
                     ))}</Descriptions.Item>
                   </Descriptions>
+                      <Descriptions title={"Feedbacks:"} style={{paddingTop: "30px"}}></Descriptions>
+                      <List
+                          itemLayout="horizontal"
+                          dataSource={order.product.feedbacks}
+                          renderItem={item => (
+                              <List.Item>
+                                  <List.Item.Meta
+                                      avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+                                      title={item.authorId.firstName}
+                                      description={item.description}
+                                  />
+                              </List.Item>
+                          )}
+                      />
               </div></>
+
           )
       }
 

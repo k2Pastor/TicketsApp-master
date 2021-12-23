@@ -41,7 +41,8 @@ export class FeedbackService implements IFeedbackService {
         return OrderRepository.findById(orderId).then((order: OrderModel) => {
             if (order) {
                 return ProductRepository.findById(order.product)
-                    .populate('feedbacks')
+                    //.populate('feedbacks')
+                    .populate({path: 'feedbacks', populate : {path: 'authorId'}})
                     .exec()
                     .then((product : ProductModel | null) => {
                         return Promise.resolve(product.feedbacks);
@@ -71,7 +72,7 @@ export class FeedbackService implements IFeedbackService {
                                 return ProductRepository.findById(order.product)
                                     .exec()
                                     .then((product: ProductModel | null) => {
-                                        feedback.authorId = userProps._id;
+                                        feedback.authorId = userProps;
                                         const finalFeedback = new FeedbackRepository(feedback);
                                         return finalFeedback.save()
                                             .then(() => {
