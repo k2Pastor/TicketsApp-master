@@ -74,6 +74,7 @@ export class OrderService implements IOrderService {
         return SecureUserRepository.findById(userId).then((user: SecureUserModel) => {
             return DetailedUserRepository.find({"email" : user.email}).then((userProps: DetailedUserModel[]) => {
                 return OrderRepository.find({})
+                    .populate('product')
                     .exec()
                     .then((orders: OrderModel[] | null) => {
                         if (!orders) {
