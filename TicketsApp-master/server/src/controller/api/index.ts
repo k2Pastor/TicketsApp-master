@@ -9,5 +9,6 @@ router.use('/products', require('./products.controller'))
 router.use('/upload', require('./upload.controller'))
 router.use('/feedbacks', require('./feedbacks.controller'))
 router.use('/companies', require('./companies.controller'))
+router.use('/coupons', require('./coupons.controller'))
 
 module.exports = router;
