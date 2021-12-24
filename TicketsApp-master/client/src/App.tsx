@@ -12,7 +12,9 @@ import {RegistrationForm} from "./Registration/RegistrationForm";
 import ProductsListPage from "./Products/ProductsListPage";
 import NewProduct from "./Products/NewProduct";
 import CompaniesListPage from "./Companies/CompaniesListPage";
+import CouponsListPage from "./Coupons/CouponsListPage";
 import NewCompany from "./Companies/NewCompany";
+import NewCoupon from "./Coupons/NewCoupon";
 import {Layout} from "antd";
 import NewFeedback from "./Feedbacks/NewFeedback";
 
@@ -34,7 +36,9 @@ class App extends Component {
             <PrivateRoute path='/user/:id' component={UserPage}/>
             <PrivateRoute path='/products' component={ProductsListPage}/>
             <PrivateRoute path='/companies' component={CompaniesListPage}/>
+            <PrivateRoute path='/coupons' component={CouponsListPage}/>
             <PrivateRoute path='/newCompany' component={NewCompany} />
+            <PrivateRoute path='/newCoupon' component={NewCoupon} />
             <Route path="/register" component={RegistrationForm} />
             {/* <Route exact path='/user' component={User}/> */}
         </Content>
