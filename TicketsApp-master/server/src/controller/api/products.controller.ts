@@ -62,6 +62,18 @@ export class ProductsController {
             res.status(500).send(error);
         })
     }
+
+    applyCoupon(req: Request, res: Response): void {
+        // @ts-ignore
+        const { payload: { id } } = req;
+        const productId = req.body.productId;
+        const codeWord = req.body.codeWord;
+        productService.applyCoupon(productId, id, codeWord).then(() => {
+            res.status(200).send();
+        }, (e) => {
+            res.status(500).send(e);
+        })
+    }
 }
 
 const controller = new ProductsController();
@@ -73,5 +85,7 @@ router.get('/getProduct/:id', auth.required, controller.getProduct)
 router.get('/getProductsByCompany/:id', auth.required, controller.getProductsByCompany)
 
 router.post('/addProduct', auth.required, controller.addProduct)
+
+router.put('/applyCoupon', auth.required, controller.applyCoupon)
 
 module.exports = router;
