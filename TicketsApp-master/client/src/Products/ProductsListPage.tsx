@@ -3,8 +3,10 @@ import {Link, withRouter} from 'react-router-dom';
 import {userService} from "../Services/UserService";
 import {ProductModel, ProductsState} from "@pavo/shared-services-shared/src";
 import axiosInstance from "../Auth/AxiosInstance";
-import {Button, Card, Col, notification, Row} from "antd";
+import {Button, Card, Col, notification, Row, Modal, Form, Input} from "antd";
 import {api_url} from "../environment";
+import { EditOutlined } from '@ant-design/icons';
+
 
 class ProductsListPage extends Component<any, ProductsState> {
     companyName: string;
@@ -14,8 +16,11 @@ class ProductsListPage extends Component<any, ProductsState> {
         this.state = {
             products: null,
             credentials: null,
+            isModalVisible: false,
         };
+
         this.createOrder = this.createOrder.bind(this);
+
     }
 
     async componentDidMount() {
@@ -26,7 +31,26 @@ class ProductsListPage extends Component<any, ProductsState> {
         });
     }
 
-     createOrder(id: string) {
+
+    setIsModalVisible(flag: boolean) {
+        this.setState({
+            isModalVisible: flag
+        });
+    }
+
+    showModal = () => {
+        this.setIsModalVisible(true);
+    };
+
+    handleOk = () => {
+        this.setIsModalVisible(false);
+    };
+
+    handleCancel = () => {
+        this.setIsModalVisible(false);
+    };
+
+    createOrder(id: string) {
         axiosInstance.post(`/orders/addOrder`, {
             product: id,
         }).then((_order) => {
@@ -87,8 +111,18 @@ class ProductsListPage extends Component<any, ProductsState> {
                                     ]}
                                 >
                                     <p>{product.description}</p>
-                                    <b>Price: {product.price}</b>
+                                    <b style={{paddingRight: "5px"}}>Price: {product.price}</b>
+                                    <Button type="primary" icon={<EditOutlined />} shape="circle" size={"small"} onClick={this.showModal}/>
                                     <p>Company: {product.company.title}</p>
+                                    <Modal title="Basic Modal" visible={this.state.isModalVisible} onOk={this.handleOk} onCancel={this.handleCancel}>
+                                        <Form.Item name="codeWord" label="code word" rules={[
+                                            {
+                                                required: true,
+                                                message: "Please, input code word"
+                                            }]}>
+                                            <Input style={{width: "100%"}} id={"codeWordInput"} />
+                                        </Form.Item>
+                                    </Modal>
                                 </Card>
                             </Col>
                         ))

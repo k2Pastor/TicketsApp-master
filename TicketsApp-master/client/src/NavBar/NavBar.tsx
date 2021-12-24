@@ -18,7 +18,7 @@ class NavBar extends Component<any, any> {
                         key="1">
                         <Link to={`/`}
                                 className={"navbar-menu-item"}>
-                            All Orders
+                            Orders
                         </Link>
                     </Menu.Item>
                     {userService.hasRole("Admin") &&
@@ -26,7 +26,7 @@ class NavBar extends Component<any, any> {
                         key="2">
                         <Link to={`/products`}
                               className={"navbar-menu-item"}>
-                            All Products
+                            Products
                         </Link>
                     </Menu.Item>
                     }
@@ -35,7 +35,16 @@ class NavBar extends Component<any, any> {
                             key="3">
                             <Link to={`/companies`}
                                   className={"navbar-menu-item"}>
-                                All Companies
+                                Companies
+                            </Link>
+                        </Menu.Item>
+                    }
+                    {userService.hasRole("Admin") &&
+                        <Menu.Item
+                            key="4">
+                            <Link to={`/coupons`}
+                                  className={"navbar-menu-item"}>
+                                Coupons
                             </Link>
                         </Menu.Item>
                     }

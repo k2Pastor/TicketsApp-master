@@ -170,7 +170,6 @@ class OrderDetailsPage extends Component<any, {order: OrderModel, createdSuccess
                           )}
                       />
               </div></>
-
           )
       }
 

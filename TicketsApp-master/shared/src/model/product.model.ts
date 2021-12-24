@@ -16,4 +16,5 @@ export interface ProductModel {
 export interface ProductsState {
     products: ProductModel[];
     credentials: CredentialsModel;
+    isModalVisible: boolean;
 }
